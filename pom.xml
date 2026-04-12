@@ -70,6 +70,11 @@
             <version>2.0.53</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.openstack4j.core</groupId>
+            <artifactId>openstack4j</artifactId>
+            <version>3.3</version>
+        </dependency>
 
     </dependencies>
 
