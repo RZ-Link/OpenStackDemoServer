@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RController {
 
     @GetMapping("/hello-R")
-    public R helloR() {
-        return R.ok().setData("Hello R!");
+    public R<String> helloR() {
+        return R.ok("Hello R!");
     }
 }

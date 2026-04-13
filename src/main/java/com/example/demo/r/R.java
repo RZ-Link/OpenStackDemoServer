@@ -1,50 +1,41 @@
 package com.example.demo.r;
 
-import com.alibaba.fastjson2.JSON;
-import com.alibaba.fastjson2.TypeReference;
+import lombok.Data;
 import org.apache.http.HttpStatus;
 
-import java.util.HashMap;
+@Data
+public class R<T> {
 
-public class R extends HashMap<String, Object> {
-    public R setData(Object data) {
-        put("data", data);
-        return this;
-    }
-
-    public <T> T getData(TypeReference<T> typeReference) {
-        Object data = get("data");
-        String jsonString = JSON.toJSONString(data);
-        T t = JSON.parseObject(jsonString, typeReference);
-        return t;
-    }
+    private T data;
+    private Integer code;
+    private String msg;
 
     public R() {
-        put("code", 0);
-        put("msg", "success");
+        this.code = 0;
+        this.msg = "success";
     }
 
-    public static R error() {
-        R r = new R();
-        r.put("code", HttpStatus.SC_INTERNAL_SERVER_ERROR);
-        r.put("msg", "系统异常");
+    public static <T> R<T> error() {
+        R<T> r = new R<>();
+        r.code = HttpStatus.SC_INTERNAL_SERVER_ERROR;
+        r.msg = "系统异常";
         return r;
     }
 
-    public static R error(String msg) {
-        R r = new R();
-        r.put("code", HttpStatus.SC_INTERNAL_SERVER_ERROR);
-        r.put("msg", msg);
+    public static <T> R<T> error(String msg) {
+        R<T> r = new R<>();
+        r.code = HttpStatus.SC_INTERNAL_SERVER_ERROR;
+        r.msg = msg;
         return r;
     }
 
-    public static R ok() {
-        return new R();
+    public static <T> R<T> ok() {
+        return new R<>();
     }
 
-    public static R ok(String msg) {
-        R r = new R();
-        r.put("msg", msg);
+    public static <T> R<T> ok(T data) {
+        R<T> r = new R<>();
+        r.data = data;
         return r;
     }
 
