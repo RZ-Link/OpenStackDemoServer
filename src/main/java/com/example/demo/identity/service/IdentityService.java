@@ -1,4 +1,4 @@
-package com.example.demo.identity;
+package com.example.demo.identity.service;
 
 import org.openstack4j.api.OSClient;
 import org.openstack4j.model.common.Identifier;
