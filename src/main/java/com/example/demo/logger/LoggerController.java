@@ -11,6 +11,6 @@ public class LoggerController {
     @GetMapping("/hello-logger")
     public String helloLogger() {
         log.info("hello-logger");
-        return "";
+        return "hello-logger";
     }
 }
