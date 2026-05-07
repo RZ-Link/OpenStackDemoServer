@@ -1,14 +1,12 @@
-package com.example.demo.images.controller;
+package com.example.demo.image.controller;
 
 import com.example.demo.identity.service.IdentityService;
-import com.example.demo.images.response.Image;
-import com.example.demo.images.response.ImagesListResponse;
+import com.example.demo.image.response.Image;
+import com.example.demo.image.response.ImageListResponse;
 import com.example.demo.r.R;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -16,14 +14,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/images")
-public class ImagesController {
+@RequestMapping("/image")
+public class ImageController {
 
     @Autowired
     private IdentityService identityService;
 
     @GetMapping("/list")
-    public R<ImagesListResponse> list() {
+    public R<ImageListResponse> list() {
         var os = identityService.getOSClientV3();
         var images = os.imagesV2().list();
 
@@ -40,9 +38,9 @@ public class ImagesController {
             temp.setUpdatedAt(image.getUpdatedAt() != null ? image.getUpdatedAt().toString() : null);
             result.add(temp);
         }
-        ImagesListResponse imagesListResponse = new ImagesListResponse();
-        imagesListResponse.setImages(result);
+        ImageListResponse imageListResponse = new ImageListResponse();
+        imageListResponse.setImages(result);
 
-        return R.ok(imagesListResponse);
+        return R.ok(imageListResponse);
     }
 }

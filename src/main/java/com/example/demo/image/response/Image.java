@@ -1,4 +1,4 @@
-package com.example.demo.images.response;
+package com.example.demo.image.response;
 
 import lombok.Data;
 
