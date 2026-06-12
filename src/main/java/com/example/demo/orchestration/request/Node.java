@@ -1,4 +1,4 @@
-package com.example.demo.heat;
+package com.example.demo.orchestration.request;
 
 import lombok.Data;
 
@@ -42,7 +42,7 @@ public class Node {
         // 连接的交换机和ip
         private List<IpInfo> ipInfos;
         // 静态路由信息
-        private List<StaticRoutingInfo> staticRouteInfos;
+        private List<StaticRoutingInfo> staticRoutingInfos;
 
         @Data
         public static class StaticRoutingInfo {
