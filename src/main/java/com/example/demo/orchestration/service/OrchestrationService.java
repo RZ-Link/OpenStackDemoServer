@@ -1,8 +1,15 @@
 package com.example.demo.orchestration.service;
 
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
+import com.example.demo.identity.service.IdentityService;
 import com.example.demo.orchestration.enums.NodeTypeEnum;
 import com.example.demo.orchestration.request.Node;
+import com.example.demo.orchestration.response.CreateStackResponse;
+import org.openstack4j.api.Builders;
+import org.openstack4j.api.OSClient;
+import org.openstack4j.model.heat.Stack;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.Yaml;
@@ -11,6 +18,9 @@ import java.util.*;
 
 @Service
 public class OrchestrationService {
+
+    @Autowired
+    private IdentityService identityService;
 
     /**
      * 解析nodes，生成template
@@ -148,7 +158,17 @@ public class OrchestrationService {
     /**
      * 创建stack
      */
-    public boolean createStack(String template) {
-        return true;
+    public CreateStackResponse createStack(String template) {
+        OSClient.OSClientV3 os = identityService.getOSClientV3();
+        String stackName = StrUtil.format("stack_{}", IdUtil.simpleUUID().substring(0, 4));
+        Stack stack = os.heat().stacks().create(Builders.stack()
+                .name(stackName)
+                .template(template)
+                .timeoutMins(5L)
+                .build());
+        CreateStackResponse response = new CreateStackResponse();
+        response.setStackId(stack.getId());
+        response.setStackName(stackName);
+        return response;
     }
 }
