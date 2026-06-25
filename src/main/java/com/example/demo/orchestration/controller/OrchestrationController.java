@@ -40,6 +40,13 @@ public class OrchestrationController {
         OSClient.OSClientV3 os = identityService.getOSClientV3();
         Stack stack = os.heat().stacks().getDetails(request.getStackName(), request.getStackId());
 
+        if (stack == null) {
+            GetStackDetailsResponse response = new GetStackDetailsResponse();
+            response.setStatus(null);
+            response.setNodeIdToVNCConsoleUrl(null);
+            return R.ok(response);
+        }
+
         Map<String, String> nodeIdToVNCConsoleUrl = new HashMap<>();
         if (Objects.equals("CREATE_COMPLETE", stack.getStatus())) {
             List<? extends Resource> resources = os.heat().resources().list(request.getStackName(), request.getStackId());
